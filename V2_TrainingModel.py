@@ -73,7 +73,7 @@ def embedd_simple(model, truedf, fakedf):
             labels.extend([label] * len(batch_emb))
 
             # optional: save cache to avoid recomputing embeddings
-            if len(embeddings) % 700 == 0:
+            if len(embeddings) % 100 == 0:
                 np.save("embeddings.npy", np.array(embeddings))
                 np.save("labels.npy", np.array(labels))
     return np.array(embeddings), np.array(labels)
