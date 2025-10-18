@@ -26,7 +26,7 @@ def textfilter(text):
 
 # Load trained model
 clf = joblib.load("sgd_classifier_model.joblib")
-MODEL_NAME = "twine/mxbai-embed-xsmall-v1:latest"
+MODEL_NAME = "mxbai-embed-large"
 
 def predict_news(text):
     """

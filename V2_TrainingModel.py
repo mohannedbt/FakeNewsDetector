@@ -56,7 +56,7 @@ def chunk(text, chunk_size=100):
     return chunks
 
 # ------------------ Embedding function ------------------
-model_name = "twine/mxbai-embed-xsmall-v1:latest"
+model_name = "mxbai-embed-large"
 
 def embedd_simple(model, truedf, fakedf):
     embeddings = []
@@ -73,7 +73,7 @@ def embedd_simple(model, truedf, fakedf):
             labels.extend([label] * len(batch_emb))
 
             # optional: save cache to avoid recomputing embeddings
-            if len(embeddings) % 500 == 0:
+            if len(embeddings) % 700 == 0:
                 np.save("embeddings.npy", np.array(embeddings))
                 np.save("labels.npy", np.array(labels))
     return np.array(embeddings), np.array(labels)
@@ -95,6 +95,7 @@ if os.path.exists("embeddings.npy") and os.path.exists("labels.npy"):
 else:
     print("Generating embeddings...")
     embeddings, labels = embedd_simple(model_name, truedf, fakedf)
+    
     np.save("embeddings.npy", embeddings)
     np.save("labels.npy", labels)
     print("Embeddings and labels saved.")
