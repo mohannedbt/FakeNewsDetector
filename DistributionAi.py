@@ -41,6 +41,8 @@ def predict_news(text):
     pred = clf.predict(embedding)[0]
     prob = clf.predict_proba(embedding)[0]
     confidence = prob[pred] * 100
-    
-    label = "Real" if pred == 1 else "Fake"
+    if (prob[pred]>0.65):
+        label = "Real" if pred==1 else "Fake"
+    else:
+        label = "uncertain needs human intervention"
     return label, confidence
