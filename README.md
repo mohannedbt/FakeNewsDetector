@@ -1,89 +1,90 @@
-# FakeNewsDetector
+- - # FakeNewsDetector
 
-**FakeNewsDetector** is an AI-powered tool that classifies news articles as **real** or **fake**. It combines **text preprocessing, embedding generation**, and a **machine learning classifier**, with a minimal **web interface** for predictions.
-
-------
-
-### Folder Structure
-
-```
-Project
-│   DistributionAi.py
-│   embeddings.npy
-│   Fake.csv
-│   labels.npy
-│   README.md
-│   Server.py
-│   sgd_classifier_model.joblib
-│   True.csv
-│   V1_model.py
-│   V2_TrainingModel.py
-│
-├── templates
-│       index.html
-└── docs
-```
-
-------
-
-### Key Files
-
-- `V2_TrainingModel.py` – Preprocesses text, generates embeddings, and trains the model.
-- `DistributionAi.py` – Loads the trained model and makes predictions.
-- `Server.py` – Runs a FastAPI server for programmatic predictions.
-- `sgd_classifier_model.joblib` – Trained model file.
-
-------
-
-### Features
-
-- Preprocessing: lowercasing, stopwords removal, number-to-word conversion.
-- Embeddings: uses Ollama embeddings for semantic representation.
-- Model: SGDClassifier for fake news detection.
-- UI & API: Flask interface and FastAPI server for predictions.
-- Training visualization: plots log-loss curves.
-
-------
-
-### Getting Started
-
-1. **Install dependencies:**
-
-```
-pip install pandas numpy nltk inflect tqdm scikit-learn matplotlib joblib ollama fastapi uvicorn flask
-```
-
-1. **Prepare datasets:** `Fake.csv` and `True.csv` in project root.
-2. **Generate embeddings & train model:**
-
-```
-python V2_TrainingModel.py
-```
-
-1. **Run server:**
-
-```
-python Server.py
-```
-
-1. **Make predictions in Python:**
-
-```
-from DistributionAi import predict_article
-result, confidence = predict_article("Some news text")
-print(result, confidence)
-```
-
-------
-
-### Notes
-
-- Embeddings are saved in `embeddings.npy` to avoid recomputation.
-
-- Current dataset uses 3000 articles per class; increasing data may improve accuracy.
-
-- Multiple versions are included to track progress and experiments.
-
-- **In progress of making V3_trainingModel **using **Deep learning**
-
+    [Python 3.10+](https://www.python.org/) | [MIT License](LICENSE) | [GitHub Issues](https://github.com/mohannedbt/FakeNewsDetector/issues)
   
+    FakeNewsDetector is an AI-powered tool for classifying news articles as real or fake. It combines text preprocessing, embeddings, and machine learning or deep learning models, along with a web interface and API server for predictions.
+  
+    ---
+  
+    ## Project Structure
+  
+    FakeNewsDetector/
+    │   DistributionAi.py          # Loads trained model and predicts
+    │   Server.py                  # FastAPI server for predictions
+    │   README.md                  # Project documentation
+    │   V1_model.py                # Initial ML prototype
+    │   V2_TrainingModel.py        # Preprocessing + embeddings + ML training (SGDClassifier)
+    │   V3_TrainingModel.py        # Deep learning model (TensorFlow)
+    │
+    ├── templates/
+    │       index.html             # Minimal web interface template
+    └── __pycache__/               # Python compiled files (ignored)
+  
+    ---
+  
+    ## Features
+  
+    - Preprocessing: lowercasing, stopword removal, number-to-word conversion
+    - Embeddings: uses Ollama local embeddings (mxbai-small) — tiny and fast
+    - Models:
+      - V2: SGDClassifier (traditional ML)
+      - V3: Deep learning neural network (TensorFlow)
+    - API & UI: FastAPI server + minimal web interface
+    - Training visualization: plots log-loss and performance metrics
+  
+    ---
+  
+    ## Model Comparison
+  
+    | Version | Type               | Notes                                                        |
+    | ------- | ------------------ | ------------------------------------------------------------ |
+    | V2      | ML (SGDClassifier) | Lightweight ML model, good for fast training on embeddings   |
+    | V3      | Deep Learning (NN) | TensorFlow neural network, handles complex patterns better, early stopping enabled |
+  
+    ---
+  
+    ## Quick Setup
+  
+    1. Install dependencies:
+  
+    pip install pandas numpy nltk inflect tqdm scikit-learn matplotlib joblib ollama fastapi uvicorn flask tensorflow
+  
+    2. Prepare datasets: Place `Fake.csv` and `True.csv` in the project root.
+  
+    3. Train Models:
+  
+    # Train ML model
+    python V2_TrainingModel.py
+  
+    # Train Deep Learning model
+    python V3_TrainingModel.py
+  
+    > Note: Make sure Ollama is installed locally. The embedding model `mxbai-small` is fast and lightweight. You can replace it with another Ollama embedding if desired.
+  
+    4. Run Server:
+  
+    python Server.py
+  
+    5. Make Predictions in Python:
+  
+    from DistributionAi import predict_article
+  
+    result, confidence = predict_article("Some news text here")
+    print(result, confidence)
+  
+    ---
+  
+    ## Notes
+  
+    - `embeddings.npy` caches embeddings for faster retraining.
+    - Multiple versions (`V1`, `V2`, `V3`) track experimentation.
+    - `.pyc` and `__pycache__/` are ignored in Git.
+    - Large datasets or embeddings should use Git LFS if exceeding GitHub’s 100MB limit.
+  
+    ---
+  
+    ## Recommendations
+  
+    - Use separate branches for experimentation.
+    - Switch embedding models for larger datasets if needed.
+    - Ensure Ollama is installed and accessible before training or inference.
