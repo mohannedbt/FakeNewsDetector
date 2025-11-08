@@ -22,7 +22,7 @@ from sklearn.metrics import accuracy_score
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('punkt_tab')
-model = SentenceTransformer('all-MiniLM-L6-v2')  # or any embedding model
+model = SentenceTransformer('all-MiniLM-L6-v2',device="cuda")  # or any embedding model
 
 #Remove stopwords from the text (not ncessary words "this that ...")
 def remove_stopwords(text):
@@ -105,9 +105,9 @@ def embedd(chunk_size=100):
      
 
 #Familiarizing with the data
-fakedf=pd.read_csv("fake.csv").iloc[0:2000,:]
+fakedf=pd.read_csv("fake.csv").iloc[0:20000,:]
 
-truedf=pd.read_csv("true.csv").iloc[0:2000,:]
+truedf=pd.read_csv("true.csv").iloc[0:20000,:]
 #
 # test for data null values and other test 
 #
@@ -128,15 +128,15 @@ truedf=pd.read_csv("true.csv").iloc[0:2000,:]
 # print(text[0:50])
 # new_text=textfilter(text)
 # print(new_text[0:50])
-if os.path.exists("embeddings.npy") and os.path.exists("labels.npy"):
-    embeddings = np.load("embeddings.npy", allow_pickle=True)
-    labels = np.load("labels.npy", allow_pickle=True)
+if os.path.exists("embeddingscuda.npy") and os.path.exists("labelscuda.npy"):
+    embeddings = np.load("embeddingscuda.npy", allow_pickle=True)
+    labels = np.load("labelscuda.npy", allow_pickle=True)
     print("Embeddings and labels loaded from disk.")
 else:
     print("Embeddings file not found. Generating embeddings...")
     embeddings, labels = embedd()  # now embeddings are defined
-    np.save("embeddings.npy", np.array(embeddings))
-    np.save("labels.npy", np.array(labels))
+    np.save("embeddingscuda.npy", np.array(embeddings))
+    np.save("labelscuda.npy", np.array(labels))
     print("Embeddings and labels saved.")
 
 X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=0.2, random_state=42)
