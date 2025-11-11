@@ -16,7 +16,6 @@ It evolves through three main versions (**V1 → V2 → V3**) that progressively
 ## 📚 Dataset  
 
 This project uses the **Fake and Real News Dataset** from **Kaggle**:  
-
 > [Fake and Real News Dataset (Kaggle)](https://www.kaggle.com/clmentbisaillon/fake-and-real-news-dataset)
 
 Download and place the following files in your project root:
